@@ -1,7 +1,7 @@
 <?php
 
 
-class TodosModel
+class TodosModel extends Model
 {
     public function add($value)
     {

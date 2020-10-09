@@ -1,7 +1,7 @@
 <?php
 
 
-class MainController
+class MainController extends Controller
 {
     public function get($params)
     {
