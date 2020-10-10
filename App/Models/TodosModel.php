@@ -4,15 +4,12 @@ namespace App\Models;
 
 class TodosModel extends Model
 {
+    public static $table = 'todos';
+
     public $name;
     public $email;
     public $text;
-
-    public function __construct($name, $email, $text)
-    {
-        $this->name = $name;
-        $this->email = $email;
-        $this->text = $text;
-    }
+    public $completed = 0;
+    public $edited = 0;
 
 }

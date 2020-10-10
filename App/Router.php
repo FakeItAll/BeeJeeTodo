@@ -15,7 +15,7 @@ class Router
         '/add' => [
             'class' => 'AddController',
             'post' => 'add',
-            'get' => 'addGet',
+            'get' => 'addAsGet',
         ],
         '/auth' => [
             'class' => 'AuthController',

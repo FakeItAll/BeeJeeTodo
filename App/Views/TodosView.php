@@ -18,10 +18,10 @@ class TodosView extends View
 
     public function __construct()
     {
-        $todos = TodosModel::arr();
+        $todos = TodosModel::all();
         $todosContent = '';
         foreach ($todos as $todo) {
-            $todoParams = $this->prepareTodo($todo);
+            $todoParams = $this->prepareTodo($todo->toArr());
             $todosContent .= $this->getReplaceTemplate('todo', $this->prepareTodo($todoParams));
         }
 

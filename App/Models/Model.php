@@ -2,50 +2,43 @@
 
 namespace App\Models;
 
+use App\DB;
+
 abstract class Model
 {
-    protected static $collection = [];
-    protected static $idCounter = 1;
+    public static $table = '';
 
-    public $id;
-
-    public static function init()
+    public function toArr()
     {
-        self::$collection = [];
+        return (array)$this;
     }
 
     public static function all()
     {
-        return self::$collection;
+        return DB::instance(static::class)->all();
     }
 
-    public static function arr()
+    public static function get($column, $value)
     {
-        $arrCollection = [];
-        foreach (self::$collection as $k => $v) {
-            $arrCollection[$k] = (array)$v;
+        return DB::instance(static::class)->firstBy($column, $value);
+    }
+
+    public static function add(Model $object)
+    {
+        return DB::instance(static::class)->add($object);
+    }
+
+    public static function edit(Model $object, $column, $value)
+    {
+        return DB::instance(static::class)->edit($object, $column, $value);
+    }
+
+    public function __construct($array = null)
+    {
+        if ($array) {
+            foreach ($array as $field => $value) {
+                $this->$field = $value;
+            }
         }
-        return $arrCollection;
-    }
-
-    public static function get($id)
-    {
-        return !empty(self::$collection[$id]) ? self::$collection[$id] : null;
-    }
-
-    public static function add(Model $obj, $id)
-    {
-        $obj->id = $id;
-        self::$collection = array_merge(self::$collection, [$obj->id => $obj]);
-        return $obj->id;
-    }
-
-    public static function edit(Model $obj, $id)
-    {
-        if (empty(self::$collection[$id])) {
-            return false;
-        }
-        self::$collection[$id] = $obj;
-        return true;
     }
 }
