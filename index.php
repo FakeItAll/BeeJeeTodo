@@ -1,5 +1,11 @@
 <?php
 
-require_once 'Router.php';
+require_once 'Autoloader.php';
 
-Router::execute();
+function main()
+{
+    Autoloader::register();
+    App\Router::execute();
+}
+
+main();
