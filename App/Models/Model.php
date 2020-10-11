@@ -8,6 +8,11 @@ abstract class Model
 {
     public static $table = '';
 
+    public static function count()
+    {
+        return DB::instance(static::class)->count();
+    }
+
     public static function all($sort = null)
     {
         return DB::instance(static::class)->all($sort);

@@ -22,7 +22,7 @@ class DB extends mysqli
 
     protected function selectQuery()
     {
-        return 'SELECT * FROM `' . self::$table . '`';
+        return 'SELECT * FROM `' . static::$table . '`';
     }
 
     protected function whereQuery($column, $value)
@@ -53,12 +53,18 @@ class DB extends mysqli
 
     public static function instance($model)
     {
-        if (!self::$instance) {
-            self::$instance = new self(self::$host, self::$username, self::$passwd, self::$dbname);
+        if (!static::$instance) {
+            static::$instance = new static(static::$host, static::$username, static::$passwd, static::$dbname);
         }
-        self::$model = $model;
-        self::$table = $model::$table;
-        return self::$instance;
+        static::$model = $model;
+        static::$table = $model::$table;
+        return static::$instance;
+    }
+
+    public function count()
+    {
+        $query = 'SELECT COUNT(*) as count FROM `' . static::$table . '`';
+        return (int)$this->query($query)->fetch_assoc()['count'];
     }
 
     public function all($sort = null)
@@ -66,7 +72,7 @@ class DB extends mysqli
         $query = implode(' ', [$this->selectQuery(), $this->sortQuery($sort)]);
         $result = $this->query($query);
         $collect = [];
-        while ($object = $result->fetch_object(self::$model)) {
+        while ($object = $result->fetch_object(static::$model)) {
             $collect[] = $object;
         }
         return $collect;
@@ -89,7 +95,7 @@ class DB extends mysqli
         }
         $result = $this->query($query);
         $collect = [];
-        while ($object = $result->fetch_object(self::$model)) {
+        while ($object = $result->fetch_object(static::$model)) {
             $collect[] = $object;
         }
         return $collect;
@@ -101,7 +107,7 @@ class DB extends mysqli
         return
             $this
                 ->query($query)
-                ->fetch_object(self::$model);
+                ->fetch_object(static::$model);
     }
 
     public function add($object)
@@ -115,7 +121,7 @@ class DB extends mysqli
         $columns = implode(', ', $columns);
         $values = implode(', ', $values);
         return $this
-            ->query('INSERT INTO `' . self::$table . "` ($columns) VALUES ($values)");
+            ->query('INSERT INTO `' . static::$table . "` ($columns) VALUES ($values)");
     }
 
     public function edit($object, $column, $value)
@@ -126,6 +132,6 @@ class DB extends mysqli
         }
         $pairs = implode(', ', $pairs);
         return $this
-            ->query('UPDATE `' . self::$table . "` SET $pairs WHERE `$column` = $value");
+            ->query('UPDATE `' . static::$table . "` SET $pairs WHERE `$column` = $value");
     }
 }

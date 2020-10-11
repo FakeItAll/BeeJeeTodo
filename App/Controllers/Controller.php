@@ -15,6 +15,7 @@ abstract class Controller
             $params[$k] = addslashes(htmlspecialchars($v));
         }
         $this->params = $params;
+        $this->getAdmin();
     }
 
     public function paramsTo($paramTypes)
@@ -59,9 +60,12 @@ abstract class Controller
         }
     }
 
-    public function setResponce($message)
+    public function setResponce($type, $message)
     {
-        $_SESSION['responce'] = $message;
+        $_SESSION['responce'] = [
+            'type' => $type,
+            'message' => $message,
+        ];
     }
 
     public function getResponce()

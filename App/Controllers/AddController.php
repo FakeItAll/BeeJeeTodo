@@ -15,9 +15,10 @@ class AddController extends Controller
         ]);
         if ($this->params['name'] && $this->params['email'] && $this->params['text']) {
             TodosModel::add(new TodosModel($this->params));
+            $this->setResponce('success', 'successAdd');
         }
         else {
-            $this->setResponce('emptyData');
+            $this->setResponce('error', 'emptyData');
         }
         return ['redirect' => '/'];
     }

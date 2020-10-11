@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todos</title>
+    <meta name="description" content="Todos desc">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container-sm w-75">
+    <ul class="nav nav-pills py-2">
+        <li class="mr-3">
+            <span class="navbar-text font-weight-bold">Todos</span>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Главная</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Авторизация</a>
+        </li>
+    </ul>
+    <div class="alert alert-danger text-center" role="alert">
+        Введите все поля!
+    </div>
+    <form action="/add" method="post" class="text-center">
+        <div class="form-row mb-3">
+            <div class="col">
+                <input class="form-control" placeholder="Название задачи">
+            </div>
+            <div class="col">
+                <input class="form-control" placeholder="Email задачи">
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col">
+                <textarea class="form-control" placeholder="Текст задачи"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить задачу</button>
+    </form>
+    <div class="btn-group my-2" role="group">
+        <a href="#" class="btn btn-primary">Название</a>
+    </div>
+    <div class="btn-group dropdown my-2" role="group">
+        <a href="#" class="btn btn-primary dropdown-toggle">Email</a>
+    </div>
+    <div class="btn-group dropup my-2" role="group">
+        <a href="#" class="btn btn-primary dropdown-toggle">Текст</a>
+    </div>
+    <div class="mx-auto">
+        <div class="card mb-3">
+            <div class="card-header py-3">
+                <span>Задача №1</span>
+                <span>(<a href="mailto:mail@mail.ru">mail@mail.ru</a>)</span>
+            </div>
+            <div class="card-body py-3">
+                <p class="card-text">Сходить за хлебом</p>
+            </div>
+            <div class="card-footer py-2">
+                <div class="btn-toolbar justify-content-between" role="toolbar">
+                    <div class="btn-group" role="group"></div>
+                    <div class="btn-group" role="group">
+                        <span class="btn border-secondary text-secondary">Редактировано</span>
+                        <span class="btn border-success text-success">Выполнено</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header py-3">
+                <span>Задача №1</span>
+                <span>(<a href="mailto:mail@mail.ru">mail@mail.ru</a>)</span>
+            </div>
+            <div class="card-body py-3">
+                <p class="card-text">Сходить за хлебом</p>
+            </div>
+            <div class="card-footer py-2">
+                <div class="btn-toolbar justify-content-between" role="toolbar">
+                    <div class="btn-group" role="group"></div>
+                    <div class="btn-group" role="group">
+                        <span class="btn border-secondary text-secondary">Редактировано</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header py-3">
+                <span>Задача №1</span>
+                <span>(<a href="mailto:mail@mail.ru">mail@mail.ru</a>)</span>
+            </div>
+            <div class="card-body py-3">
+                <p class="card-text">Сходить за хлебом</p>
+            </div>
+        </div>
+        <div class="card-footer py-2">
+            <div class="btn-toolbar justify-content-between" role="toolbar">
+                <div class="btn-group" role="group"></div>
+                <div class="btn-group" role="group"></div>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

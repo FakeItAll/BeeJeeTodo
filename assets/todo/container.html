@@ -1,0 +1,21 @@
+<form action="%add_url%" method="post" class="text-center">
+    <div class="form-row mb-3">
+        <div class="col">
+            <input name="name" class="form-control" placeholder="Название задачи">
+        </div>
+        <div class="col">
+            <input name="email" class="form-control" placeholder="Email задачи">
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col">
+            <textarea name="text" class="form-control" placeholder="Текст задачи"></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить задачу</button>
+</form>
+%sort%
+<div class="mx-auto">
+    %todos%
+</div>
+%pagination%

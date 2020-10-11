@@ -19,10 +19,11 @@ class AuthController extends Controller
                 if ($user->password === $this->params['password']) {
                     UsersModel::setCurrentUser($user);
                     $this->saveAdmin($user);
+                    $this->setResponce('success', 'successAuth');
                     return ['redirect' => '/user'];
                 }
             }
-            $this->setResponce('authFailed');
+            $this->setResponce('error', 'authFailed');
         }
         return ['redirect' => '/user'];
     }

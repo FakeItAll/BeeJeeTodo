@@ -15,7 +15,8 @@ class MainPageController extends Controller
             'desc' => 'bool',
         ]);
 
-        if ($this->params['page'] && $this->params['page'] >= 0) {
+        $this->params['page'] -= 1;
+        if ($this->params['page'] && $this->params['page'] > 0) {
             TodosModel::$page = $this->params['page'];
         }
         if (

@@ -75,7 +75,8 @@ class Router
                          !empty($result['view'])
                          && is_a($result['view'], 'App\\Views\\View', true)
                      ) {
-                         $responce = $result['responce'] ? ['responce' => $result['responce']] : [];
+                         $responce = $result['responce'] ?
+                             ['responce' => $result['responce']] : [];
                          $view = new $result['view']($responce);
                          $view::setBaseUrl(self::$baseUrl);
                          $view->execute();

@@ -4,7 +4,7 @@ require_once 'Autoloader.php';
 
 function dd($arr)
 {
-    die(print_r($arr));
+    die(var_dump($arr));
 }
 
 function main()

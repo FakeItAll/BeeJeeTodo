@@ -38,22 +38,24 @@ class ChangeController extends Controller
                             $curTodo->text = $this->params['text'];
                             $curTodo->edited = 1;
                             TodosModel::edit($curTodo, 'id', $curTodo->id);
+                            $this->setResponce('success', 'successEdit');
                         }
                     }
                 }
                 else {
-                    $this->setResponce('emptyData');
+                    $this->setResponce('error', 'emptyData');
                 }
             }
             elseif ($this->params['complete']) {
                 if ($curTodo = TodosModel::getById($this->params['id'])) {
                     $curTodo->completed = $curTodo->completed == 0 ? 1 : 0;
                     TodosModel::edit($curTodo, 'id', $curTodo->id);
+                    $this->setResponce('success', 'successComplete');
                 }
             }
         }
         else {
-            $this->setResponce('accessDenied');
+            $this->setResponce('error', 'accessDenied');
         }
         return ['redirect' => '/'];
     }

@@ -13,7 +13,6 @@ class UserPageController extends Controller
 
     public function data()
     {
-        $this->getAdmin();
         return ['view' => UserView::class, 'responce' => $this->getResponce()];
     }
 }

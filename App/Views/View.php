@@ -5,13 +5,15 @@ namespace App\Views;
 abstract class View
 {
     protected static $baseUrl = '/';
-    private $templatesDir = 'templates/';
+    private $templatesDir = 'assets';
+    protected $templatesSubDir = '';
     protected $params = [];
     protected $content = '';
 
     private function loadTemplate($template)
     {
-        return file_get_contents($this->templatesDir . $template . '.html');
+        $fullPath = $this->templatesDir . '/' . $this->templatesSubDir . '/' . $template . '.html';
+        return file_get_contents($fullPath);
     }
 
     private function replaceTemplate($templateContent, $params)
@@ -33,9 +35,13 @@ abstract class View
         return $this->replaceTemplate($this->loadTemplate($template), $params);
     }
 
-    protected function getWithBaseUrl($path)
+    protected function getUrl($path, $params = [])
     {
-        return static::$baseUrl . $path;
+        $getParams = '';
+        if ($params) {
+            $getParams = '?' . http_build_query($params);
+        }
+        return substr(static::$baseUrl, 0,  - 1) . $path . $getParams;
     }
 
     public static function setBaseUrl($url)

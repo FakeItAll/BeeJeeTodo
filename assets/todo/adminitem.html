@@ -1,0 +1,19 @@
+<form action="%change_url%" method="post">
+    <div class="card mb-3">
+        <div class="card-header py-3">
+            <div class="row">
+                <div class="col">
+                    <input name="name" value="%name%" class="form-control" placeholder="Название задачи">
+                </div>
+                <div class="col">
+                    <input name="email" value="%email%" class="form-control" placeholder="Email задачи">
+                </div>
+            </div>
+        </div>
+        <div class="card-body py-3">
+            <textarea name="text" class="form-control" placeholder="Текст задачи">%text%</textarea>
+        </div>
+        %footer%
+    </div>
+    <input name="id" value="%id%" type="hidden" />
+</form>
