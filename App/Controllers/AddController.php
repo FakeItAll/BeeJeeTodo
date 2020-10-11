@@ -6,21 +6,18 @@ use App\Models\TodosModel;
 
 class AddController extends Controller
 {
-    public function addAsGet($params)
+    public function add()
     {
-        if ($params) {
-            $newTodo = new TodosModel($params);
-            TodosModel::add($newTodo);
+        $this->paramsTo([
+            'name' => 'string',
+            'email' => 'string',
+            'text' => 'string',
+        ]);
+        if ($this->params['name'] && $this->params['email'] && $this->params['text']) {
+            TodosModel::add(new TodosModel($this->params));
         }
-        return ['redirect' => '/'];
-    }
-
-    public function add($params)
-    {
-        if ($params) {
-            $params = $this->prepareParams($params);
-            $newTodo = new TodosModel($params);
-            TodosModel::add($newTodo);
+        else {
+            $this->setResponce('emptyData');
         }
         return ['redirect' => '/'];
     }

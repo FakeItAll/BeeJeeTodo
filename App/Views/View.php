@@ -4,7 +4,9 @@ namespace App\Views;
 
 abstract class View
 {
+    protected static $baseUrl = '/';
     private $templatesDir = 'templates/';
+    protected $params = [];
     protected $content = '';
 
     private function loadTemplate($template)
@@ -31,17 +33,25 @@ abstract class View
         return $this->replaceTemplate($this->loadTemplate($template), $params);
     }
 
-    protected function prepareLayout($params)
+    protected function getWithBaseUrl($path)
     {
-        return [
-            'title' => $params['title'] ?? '',
-            'desciption' => $params['description'] ?? '',
-            'content' => $params['content'] ?? ''
-        ];
+        return static::$baseUrl . $path;
+    }
+
+    public static function setBaseUrl($url)
+    {
+        static::$baseUrl = $url;
+    }
+
+    public function __construct($params = [])
+    {
+        $this->params = $params;
     }
 
     public function show()
     {
         echo $this->content;
     }
+
+    abstract public function execute();
 }

@@ -10,15 +10,16 @@ class TodosView extends View
     private function prepareTodo($params)
     {
         return [
+            'id' => $params['id'] ?? '',
             'name' => $params['name'] ?? '',
             'email' => $params['email'] ?? '',
             'text' => $params['text'] ?? ''
         ];
     }
 
-    public function __construct()
+    public function execute()
     {
-        $todos = TodosModel::all();
+        $todos = TodosModel::mainView();
         $todosContent = '';
         foreach ($todos as $todo) {
             $todoParams = $this->prepareTodo($todo->toArr());
@@ -27,11 +28,12 @@ class TodosView extends View
 
         $todopanelContent = $this->getReplaceTemplate('todopanel', ['todos' => $todosContent]);
 
-        $layoutParams = [
+        $layoutParams = array_merge([
             'title' => 'Todos',
             'desciption' => 'You can make some todo',
-            'content' => $todopanelContent
-        ];
-        $this->content = $this->getReplaceTemplate('layout', $this->prepareLayout($layoutParams));
+            'content' => $todopanelContent,
+        ], $this->params ?? []);
+        $this->content = (new LayoutView($layoutParams))->execute();
+        return $this->content;
     }
 }

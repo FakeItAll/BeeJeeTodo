@@ -9,18 +9,28 @@ class Router
 
     private static $routes = [
         '/' => [
-            'class' => 'MainController',
+            'class' => 'MainPageController',
             'get' => 'data',
+        ],
+        '/user' => [
+            'class' => 'UserPageController',
+            'get' => 'data'
         ],
         '/add' => [
             'class' => 'AddController',
             'post' => 'add',
-            'get' => 'addAsGet',
         ],
-        '/auth' => [
+        '/change' => [
+            'class' => 'ChangeController',
+            'post' => 'change',
+        ],
+        '/user/auth' => [
             'class' => 'AuthController',
-            'get' => 'data',
             'post' => 'auth',
+        ],
+        '/user/logout' => [
+            'class' => 'AuthController',
+            'get' => 'logout',
         ],
     ];
 
@@ -49,19 +59,27 @@ class Router
              $classname = self::$controllersNamespace . self::$routes[$path]['class'];
              $type = strtolower($_SERVER['REQUEST_METHOD']);
              $params = $_REQUEST;
-             if (!empty($method = self::$routes[$path][$type])
+             if (!empty(self::$routes[$path][$type])
                  && class_exists($classname)
-                 && method_exists($controller = new $classname, $method)
+                 && method_exists($controller = new $classname($params), self::$routes[$path][$type])
              ) {
-                 if ($result = $controller->$method($params)) {
+                 $method = self::$routes[$path][$type];
+                 if ($result = $controller->$method()) {
                      if (!empty($result['404'])) {
                          self::abort404();
                      }
                      if (!empty($result['redirect'])) {
                          self::redirect($result['redirect']);
                      }
-                     if (!empty($result['view']) && method_exists($result['view'], 'show')) {
-                         $result['view']->show();
+                     if (
+                         !empty($result['view'])
+                         && is_a($result['view'], 'App\\Views\\View', true)
+                     ) {
+                         $responce = $result['responce'] ? ['responce' => $result['responce']] : [];
+                         $view = new $result['view']($responce);
+                         $view::setBaseUrl(self::$baseUrl);
+                         $view->execute();
+                         $view->show();
                      }
                  }
              }

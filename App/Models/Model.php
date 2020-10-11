@@ -8,19 +8,24 @@ abstract class Model
 {
     public static $table = '';
 
-    public function toArr()
+    public static function all($sort = null)
     {
-        return (array)$this;
+        return DB::instance(static::class)->all($sort);
     }
 
-    public static function all()
+    public static function paginate($from, $count, $sort = null)
     {
-        return DB::instance(static::class)->all();
+        return DB::instance(static::class)->paginate($from, $count, $sort);
     }
 
     public static function get($column, $value)
     {
         return DB::instance(static::class)->firstBy($column, $value);
+    }
+
+    public static function getById($value)
+    {
+        return DB::instance(static::class)->firstBy('id', $value);
     }
 
     public static function add(Model $object)
@@ -40,5 +45,10 @@ abstract class Model
                 $this->$field = $value;
             }
         }
+    }
+
+    public function toArr()
+    {
+        return (array)$this;
     }
 }

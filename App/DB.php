@@ -20,6 +20,37 @@ class DB extends mysqli
         parent::__construct($host, $username, $passwd, $dbname, null, null);
     }
 
+    protected function selectQuery()
+    {
+        return 'SELECT * FROM `' . self::$table . '`';
+    }
+
+    protected function whereQuery($column, $value)
+    {
+        return "WHERE `$column`='$value'";
+    }
+
+    protected function sortQuery($sort)
+    {
+        $result = '';
+        if ($sort) {
+            $orders = [];
+            foreach ($sort as $orderBy => $desc) {
+                $desc = $desc ? ' DESC' : '';
+                $orders[] = '`' . $orderBy . '`' . $desc;
+            }
+            $orders = implode(', ', $orders);
+            $result = "ORDER BY $orders";
+        }
+        return $result;
+    }
+
+    protected function limitQuery($page, $count)
+    {
+        $from = $page * $count;
+        return "LIMIT $from, $count";
+    }
+
     public static function instance($model)
     {
         if (!self::$instance) {
@@ -30,9 +61,10 @@ class DB extends mysqli
         return self::$instance;
     }
 
-    public function all()
+    public function all($sort = null)
     {
-        $result = $this->query('SELECT * FROM `' . self::$table . "`");
+        $query = implode(' ', [$this->selectQuery(), $this->sortQuery($sort)]);
+        $result = $this->query($query);
         $collect = [];
         while ($object = $result->fetch_object(self::$model)) {
             $collect[] = $object;
@@ -40,9 +72,22 @@ class DB extends mysqli
         return $collect;
     }
 
-    public function paginate($from, $count)
+    public function paginate($page, $count, $sort = null)
     {
-        $result = $this->query('SELECT * FROM `' . self::$table . "` LIMIT $from, $count");
+        if ($sort) {
+            $query = implode(' ', [
+                $this->selectQuery(),
+                $this->sortQuery($sort),
+                $this->limitQuery($page, $count)
+            ]);
+        }
+        else {
+            $query = implode(' ', [
+                $this->selectQuery(),
+                $this->limitQuery($page, $count)
+            ]);
+        }
+        $result = $this->query($query);
         $collect = [];
         while ($object = $result->fetch_object(self::$model)) {
             $collect[] = $object;
@@ -52,9 +97,10 @@ class DB extends mysqli
 
     public function firstBy($column, $value)
     {
+        $query = implode(' ', [$this->selectQuery(), $this->whereQuery($column, $value)]);
         return
             $this
-                ->query('SELECT * FROM `' . self::$table . "`WHERE `$column`=$value")
+                ->query($query)
                 ->fetch_object(self::$model);
     }
 
