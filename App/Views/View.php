@@ -35,8 +35,16 @@ abstract class View
         return $this->replaceTemplate($this->loadTemplate($template), $params);
     }
 
-    protected function getUrl($path, $params = [])
+    protected function getUrl($path, $params = [], $save = false, $excludes = [])
     {
+        if ($save) {
+            $curParams = [];
+            parse_str(parse_url($_SERVER['REQUEST_URI'])['query'] ?? '', $curParams);
+            foreach ($excludes as $exclude) {
+                unset($curParams[$exclude]);
+            }
+            $params = array_merge($curParams, $params);
+        }
         $getParams = '';
         if ($params) {
             $getParams = '?' . http_build_query($params);

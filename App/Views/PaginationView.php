@@ -19,7 +19,7 @@ class PaginationView extends View
         $this->params = [];
         for ($i = 1; $i <= $pagesCount; ++$i) {
             $this->params[] = [
-                'url' => $i == 1 ? $this->getUrl('/') : $this->getUrl('/', ['page' => $i]),
+                'url' => $this->getUrl('/', ['page' => $i], true),
                 'number' => $i,
                 'active' => $i - 1 == $page
             ];

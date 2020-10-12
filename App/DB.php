@@ -27,6 +27,7 @@ class DB extends mysqli
 
     protected function whereQuery($column, $value)
     {
+        $value = $this->real_escape_string($value);
         return "WHERE `$column`='$value'";
     }
 

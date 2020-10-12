@@ -47,7 +47,7 @@ class SortView extends View
             }
             $this->params[] = [
                 'field' => $field,
-                'url' => $this->getUrl('/', $urlParams),
+                'url' => $this->getUrl('/', $urlParams, true, $nextType == '' ? ['order', 'desc'] : []),
                 'type' => $type == '' ? 'default' : $type,
             ];
         }

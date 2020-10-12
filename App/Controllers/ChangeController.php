@@ -29,12 +29,8 @@ class ChangeController extends Controller
                 ]);
                 if ($this->params['name'] && $this->params['email'] && $this->params['text']) {
                     if ($curTodo = TodosModel::getById($this->params['id'])) {
-                        $editFlag = $curTodo->name !== $this->params['name'] ||
-                            $curTodo->email !== $this->params['email'] ||
-                            $curTodo->text !== $this->params['text'];
+                        $editFlag = $curTodo->name !== $this->params['name'];
                         if ($editFlag) {
-                            $curTodo->name = $this->params['name'];
-                            $curTodo->email = $this->params['email'];
                             $curTodo->text = $this->params['text'];
                             $curTodo->edited = 1;
                             TodosModel::edit($curTodo, 'id', $curTodo->id);
