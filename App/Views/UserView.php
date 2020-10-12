@@ -15,14 +15,14 @@ class UserView extends View
         if ($user = UsersModel::getCurrentUser()) {
             $userPanelParams = ['login' => $user->login, 'logout_url' => '/user/logout'];
             $content = $this->getReplaceTemplate('panel', $userPanelParams);
-            $title = 'Авторизация';
-            $description = 'Страница авторизации';
+            $title = 'Профиль';
+            $description = 'Страница профиля пользователя';
         }
         else {
             $authFormParams = ['auth_url' => $this->getUrl('/user/auth')];
             $content = $this->getReplaceTemplate('authform', $authFormParams);
-            $title = 'Профиль';
-            $description = 'Страница профиля пользователя';
+            $title = 'Авторизация';
+            $description = 'Страница авторизации';
         }
         $layoutParams = array_merge([
             'page' => 'user',
