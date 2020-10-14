@@ -3,11 +3,14 @@
 
 class Config
 {
-    public static function init($filename)
+    public static function init(...$filenames)
     {
-        if (file_exists($filename)) {
-            foreach (parse_ini_file($filename) as $k => $v) {
-                putenv("$k=$v");
+        foreach ($filenames as $filename) {
+            if (file_exists($filename)) {
+                foreach (parse_ini_file($filename) as $k => $v) {
+                    putenv("$k=$v");
+                }
+                return;
             }
         }
     }
