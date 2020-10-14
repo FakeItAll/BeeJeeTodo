@@ -4,8 +4,9 @@ namespace App\Views;
 
 abstract class View
 {
-    protected static $baseUrl = '/';
-    private $templatesDir = 'assets';
+    private $templatesDir;
+    protected $baseUrl;
+
     protected $templatesSubDir = '';
     protected $params = [];
     protected $content = '';
@@ -49,16 +50,13 @@ abstract class View
         if ($params) {
             $getParams = '?' . http_build_query($params);
         }
-        return substr(static::$baseUrl, 0,  - 1) . $path . $getParams;
-    }
-
-    public static function setBaseUrl($url)
-    {
-        static::$baseUrl = $url;
+        return substr($this->baseUrl, 0,  - 1) . $path . $getParams;
     }
 
     public function __construct($params = [])
     {
+        $this->baseUrl = env('BASE_URL', '/');
+        $this->templatesDir = env('TEMPLATES_DIR', 'assets');
         $this->params = $params;
     }
 

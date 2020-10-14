@@ -6,17 +6,21 @@ use mysqli;
 
 class DB extends mysqli
 {
+    private static $host;
+    private static $username;
+    private static $passwd;
+    private static $dbname;
+
     protected static $instance = null;
     protected static $model = '';
     protected static $table = '';
 
-    public static $host = 'localhost';
-    public static $username = 'beejee';
-    public static $passwd = '1234';
-    public static $dbname = 'beejeetodo';
-
     protected function __construct($host = null, $username = null, $passwd = null, $dbname = null)
     {
+        $host = env('DB_HOST', $host);
+        $username = env('DB_USER', $username);
+        $passwd = env('DB_PASSWORD', $passwd);
+        $dbname = env('DB_NAME', $dbname);
         parent::__construct($host, $username, $passwd, $dbname, null, null);
     }
 
