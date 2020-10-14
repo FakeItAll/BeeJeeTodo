@@ -29,7 +29,7 @@ class ChangeController extends Controller
                 ]);
                 if ($this->params['name'] && $this->params['email'] && $this->params['text']) {
                     if ($curTodo = TodosModel::getById($this->params['id'])) {
-                        $editFlag = $curTodo->name !== $this->params['name'];
+                        $editFlag = $curTodo->text !== $this->params['text'];
                         if ($editFlag) {
                             $curTodo->text = $this->params['text'];
                             $curTodo->edited = 1;
