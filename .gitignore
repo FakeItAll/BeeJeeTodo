@@ -1,6 +1,7 @@
 *.env
+.prod/
 
 web.config
-.htaccess
+.prod/.htaccess
 
 .idea/

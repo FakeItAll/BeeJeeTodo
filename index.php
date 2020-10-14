@@ -16,7 +16,7 @@ function dd($arr)
 
 function main()
 {
-    Config::init('dev.env', 'prod.env', 'exmp.env');
+    Config::init('.env', '.env.example');
     Autoloader::register();
     App\Router::execute();
 }
