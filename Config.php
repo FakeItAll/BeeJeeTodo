@@ -19,4 +19,9 @@ class Config
     {
         return getenv($key, true) ?: $default;
     }
+
+    public static function put($key, $value)
+    {
+        return putenv("$key=$value");
+    }
 }
